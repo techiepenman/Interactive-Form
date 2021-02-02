@@ -17,24 +17,23 @@ jobTitle.addEventListener('change', (e) => {
 });
 
 shirtDesign.addEventListener('change', (e) => {
-     
+     e.preventDefault();
         colorSelect.disabled = false;
         for (let i = 1; i < colorSelect.children.length; i++) {
             let colorTheme = colorSelect[i].getAttribute('data-theme');
             let designTheme = e.target.value;
-        //    console.log(colorSelect[i].getAttribute('data-theme'));
-           console.log(colorTheme);
-           console.log(designTheme);
+                  
            if (designTheme === colorTheme) {
                colorSelect[i].hidden = false;
+               colorSelect[i].selected = true;
            } else {
             colorSelect[i].hidden = true;
+            colorSelect[i].selected = false;
            }
 
         }
         
   
-    // console.log(selectDesign);
+    
 });
 
-// 
