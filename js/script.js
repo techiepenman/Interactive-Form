@@ -4,6 +4,10 @@ const colorSelect = document.querySelector('#color');
 const jobTitle = document.querySelector('#title');
 const shirtDesign = document.querySelector('#design');
 const activities = document.querySelector('#activities');
+const paymentOptions = document.querySelector('#payment');
+const creditCard = document.querySelector('#credit-card');
+const payPal = document.querySelector('#paypal');
+const bitCoin = document.querySelector('#bitcoin');
 
 otherJobField.style.display = 'none';
 colorSelect.disabled = true;
@@ -57,4 +61,39 @@ activities.addEventListener('change', (e) => {
 
     printTotal.innerHTML = `Total: $${total}`;
 });
+
+// Payment section
+payPal.hidden = true;
+bitCoin.hidden = true;
+// Set the credit card payment option as default in payment options
+paymentOptions.children[1].setAttribute('selected', 'selected');
+
+// Update UI to show the correct payment info 
+//corresponding to the selected payment option
+paymentOptions.addEventListener('change', (e) => {
+    let selectedPayment = e.target.value;
+    switch (selectedPayment) {
+        case 'paypal' :
+            payPal.hidden = false;    
+            creditCard.hidden = true;
+            bitCoin.hidden = true;
+            break;
+        case 'bitcoin' :
+            bitCoin.hidden = false;
+            payPal.hidden = true;
+            creditCard.hidden = true;
+            break;
+        case 'credit-card' :
+            creditCard.hidden = false;
+            bitCoin.hidden = true;
+            payPal.hidden = true;  
+            break;
+            default:
+                console.log('The option is not exist');
+    
+        }
+
+    console.log(selectedPayment);
+})
+
 
