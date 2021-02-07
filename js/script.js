@@ -1,4 +1,4 @@
-const nameField = document.querySelector('#name').focus();
+const nameField = document.querySelector('#name');
 const otherJobField = document.querySelector('#other-job-role');
 const colorSelect = document.querySelector('#color');
 const jobTitle = document.querySelector('#title');
@@ -8,7 +8,14 @@ const paymentOptions = document.querySelector('#payment');
 const creditCard = document.querySelector('#credit-card');
 const payPal = document.querySelector('#paypal');
 const bitCoin = document.querySelector('#bitcoin');
+const email = document.querySelector('#email');
+const cardNumber = document.querySelector('#cc-num');
+const zip = document.querySelector('#zip');
+const cvv = document.querySelector('#cvv');
+const submitBtn = document.querySelector('button');
+const activity = activities.querySelectorAll('input');
 
+nameField.focus();
 otherJobField.style.display = 'none';
 colorSelect.disabled = true;
 
@@ -43,7 +50,8 @@ shirtDesign.addEventListener('change', (e) => {
        
 });
 
-// Activity selection and pricing
+// Activity selection and pricing. Add to or deduct from the total cost by 
+//select or remove of an activity
 let printTotal = document.querySelector('#activities-cost');
 let total = 0;
 activities.addEventListener('change', (e) => {
@@ -62,10 +70,23 @@ activities.addEventListener('change', (e) => {
     printTotal.innerHTML = `Total: $${total}`;
 });
 
-// Payment section
+// Add focus indicator to the activities check boxes so pressing tab key
+//will move the focus to make the activity more obvious 
+for (let i =0; i < activity.length; i++) {
+   activity[i].addEventListener('focus', e  => {
+        console.log(activity[i]);
+        activity[i].parentElement.classList.add('focus');
+    });
+    activity[i].addEventListener('blur', e  => {
+        console.log(activity[i]);
+        activity[i].parentElement.classList.remove('focus');
+    });
+};
+
+// Payment section. Set the credit card as default in payment options
 payPal.hidden = true;
 bitCoin.hidden = true;
-// Set the credit card payment option as default in payment options
+// First child of the paymentOptions is credit card
 paymentOptions.children[1].setAttribute('selected', 'selected');
 
 // Update UI to show the correct payment info 
@@ -93,7 +114,102 @@ paymentOptions.addEventListener('change', (e) => {
     
         }
 
-    console.log(selectedPayment);
-})
+    });
 
+// Helper functions will be used to check the pattern 
+//of the user input in required fields
+    const nameValidator = (name) => {
+        const checkName = /^[a-zA-Z]+ ?[a-zA-Z]*? ?[a-zA-Z]*?$/.test(name.value);
+        return checkName;
+    };
+
+    const emailValidator = (userEmail) => {
+        const checkEmail = /^[^@]+@[^@.]+\.[a-z]+$/i.test(userEmail.value);
+        return checkEmail;
+    };
+    const creditValidator = (card) => {
+        const checkCredit = /^\d{13,16}$/i.test(card.value);
+        return checkCredit;
+    };
+
+    const zipValidator = (zipCode) => {
+        const checkZip = /^\d{5}$/i.test(zipCode.value);
+        return checkZip;
+    };
+
+    const cvvValidator = (cvvNum) => {
+        const cvvCheck = /^\d{3}$/i.test(cvvNum.value);
+        return cvvCheck;
+    };
+
+// Helper functions for handling input error messages by
+//add or removal of designated classes
+  function error (element) {
+      element.parentElement.classList.add('not-valid');
+      element.parentElement.classList.remove('valid');
+      element.parentElement.lastElementChild.style.display = 'block';
+  };
+
+  function noError (element) {
+    element.parentElement.classList.remove('not-valid');
+    element.parentElement.classList.add('valid');
+    element.parentElement.lastElementChild.style.display = 'none';
+  }
+
+ // Handle submit   
+submitBtn.addEventListener('click', (e) => {
+     
+    if (!nameValidator(nameField)) {
+        e.preventDefault();
+        console.log('name is not valid');
+        error(nameField);
+    } else {
+        noError(nameField);
+    }
+    if (!emailValidator(email)) {
+        e.preventDefault();
+        console.log('email is not valid');
+        error(email);
+    } else {
+        noError(email);
+    }
+    
+    if (total === 0) {
+        e.preventDefault();
+        console.log('activity is not selected'); 
+        error(activities.firstElementChild);
+    } else {
+        noError(activities.firstElementChild);
+    };    
+   
+   
+    //Only validate credit card credentials if selected payment method 
+    //is credit card
+    if (paymentOptions.value === 'credit-card') {
+        console.log('credit is selected');
+       if (!creditValidator(cardNumber)) {
+          e.preventDefault();
+          console.log('credit card is not valid');
+          error(cardNumber);
+       } else {
+          noError(cardNumber);
+       }
+       if (!zipValidator(zip)) {
+          e.preventDefault();
+          console.log('zip is not valid');
+          error(zip);
+        } else {
+            noError(zip);
+        }
+       if (!cvvValidator(cvv)) {
+        e.preventDefault();
+        console.log('cvv code is not valid');
+        error(cvv);
+        } else {
+            noError(cvv);
+        }
+
+
+}
+});
 

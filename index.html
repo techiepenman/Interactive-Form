@@ -25,7 +25,7 @@
           <legend>Basic Info</legend>
           
           <label for="name">Name: <span class="asterisk">*</span>
-            <input type="text" id="name" name="user-name" class="error-border" autofocus>
+            <input type="text" id="name" name="user-name" class="error-border" >
             <span id="name-hint" class="name-hint hint">Name field cannot be blank</span>
           </label>
           
@@ -195,7 +195,7 @@
           <div class="credit-card-box">
             <div class="num-box">
               <label for="cc-num">Card Number: <span class="asterisk">*</span>
-                <input id="cc-num" name="user-cc-num" type="text" class="error-border">
+                <input id="cc-num" name="user-cc-num" type="text" class="error-border" maxlength="16">
                 <span id="cc-hint" class="cc-hint hint">Credit card number must be between 13 - 16 digits</span>
               </label>
             </div>
