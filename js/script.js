@@ -154,7 +154,7 @@ function noError(element) {
     element.parentElement.lastElementChild.style.display = 'none';
 }
 
-// Handle submit   
+// Handle submit    
 form.addEventListener('submit', (e) => {
 
     if (!nameValidator(nameField)) {
