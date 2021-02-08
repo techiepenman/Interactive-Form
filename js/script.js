@@ -12,8 +12,8 @@ const email = document.querySelector('#email');
 const cardNumber = document.querySelector('#cc-num');
 const zip = document.querySelector('#zip');
 const cvv = document.querySelector('#cvv');
-const submitBtn = document.querySelector('button');
 const activity = activities.querySelectorAll('input');
+const form = document.querySelector('form');
 
 nameField.focus();
 otherJobField.style.display = 'none';
@@ -155,7 +155,7 @@ function noError(element) {
 }
 
 // Handle submit   
-submitBtn.addEventListener('click', (e) => {
+form.addEventListener('submit', (e) => {
 
     if (!nameValidator(nameField)) {
         e.preventDefault();
