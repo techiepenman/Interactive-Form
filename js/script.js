@@ -30,7 +30,7 @@ jobTitle.addEventListener('change', (e) => {
 
 });
 
-// Activate colors in color drop down based on the selected design from design drop down
+// Activate colors in color drop down based on the selected design from design drop down.
 shirtDesign.addEventListener('change', (e) => {
     e.preventDefault();
     colorSelect.disabled = false;
@@ -176,7 +176,6 @@ form.addEventListener('submit', (e) => {
     } else {
         noError(activities.firstElementChild);
     };
-
 
     //Only validate credit card credentials if selected payment method 
     //is credit card
